@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About • Tamil Nadu Recipes</title>
+
+  <style>
+    body {
+      font-family: Inter, system-ui, Arial, sans-serif;
+      margin: 0;
+      background: linear-gradient(180deg,#fff 0%, #fff9f4 100%);
+      color: #ff7043;
+      line-height: 1.6;
+    }
+    header {
+     background:transparent;
+      color: #ff7043;
+      
+      padding: 15px 20px;
+    }
+    header h1 { margin: 0; font-size: 22px; }
+    nav { margin-top: 8px; }
+    nav a {
+      color: #1f1e1e;
+      margin-right: 15px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    nav a:hover { text-decoration: underline; }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #ff7043;
+      margin-top: 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      border-top: 1px solid #eee;
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Smart Recipe Generator </h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>About Us</h2>
+    <p>
+      Welcome to <strong>Smart Recipe Generator</strong> — your online guide to authentic
+      South Indian cooking. Our goal is to bring together traditional Tamil dishes 
+      like <em>idli</em>, <em>dosa</em>, <em>sambar</em>, and modern recipes in one place.
+    </p>
+    <p>
+      This project is built to help food lovers search recipes by ingredients and 
+      discover the rich variety of Tamil Nadu’s cuisine. Whether you are a beginner 
+      or an experienced cook, we make it simple and fun to try out new dishes.
+    </p>
+    <p>
+      🌱 Healthy • 🍛 Authentic • 🔥 Spicy — Experience Tamil Nadu on your plate!
+    </p>
+  </div>
+
+  <footer>
+    © <span id="year"></span>Smart Recipe Generator . All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
