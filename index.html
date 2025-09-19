@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+   
+  <title>Smart Recipe Generator• Recipe Finder</title>
+
+  <style>
+    .hero-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 25px;
+    width: 177%;
+    box-shadow: var(--shadow);
+}
+    :root{
+      --accent:#ff7043;
+      --muted:#f7f3f1;
+      --card-bg:#ffffff;
+      --text:#222;
+      --shadow: 0 6px 18px rgba(27,31,35,0.08);
+      --radius:12px;
+      --max-width:1100px;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:Inter, system-ui, "Segoe UI", Roboto, Arial;
+      margin:0;
+      color:var(--text);
+      background:linear-gradient(180deg,#fff 0%, #fff9f4 100%);
+      line-height:1.45;
+    }
+    header{
+      background:transparent;
+      padding:18px 20px;
+      position:sticky;
+      top:0;
+      backdrop-filter: blur(4px);
+      z-index:20;
+    }
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 18px}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;gap:10px;align-items:center}
+    .logo{width:44px;height:44px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;box-shadow:var(--shadow)}
+    nav ul{list-style:none;display:flex;gap:12px;padding:0;margin:0}
+    nav a{color:var(--text);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600}
+    nav a:hover{background:var(--muted)}
+    main{padding:28px 0 80px}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:26px;align-items:center;margin-bottom:28px}
+    .hero-card{background:var(--card-bg);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+    .hero h1{color:var(--accent);margin:0 0 12px;font-size:28px}
+    .hero p{margin:0 0 18px;color:#444}
+    .search-row{display:flex;gap:8px;align-items:center}
+    .search-row input{flex:1;padding:12px 14px;border-radius:10px;border:2px solid #ffe9df;background:#fff;outline:none;font-size:15px}
+    .search-row input:focus{box-shadow:0 6px 18px rgba(255,112,67,0.12);border-color:var(--accent)}
+    .btn{background:var(--accent);color:#fff;padding:10px 14px;border:none;border-radius:10px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(255,112,67,0.12)}
+    .btn.secondary{background:transparent;color:var(--accent);border:2px solid var(--accent);font-weight:600}
+    .results{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+    .card{background:var(--card-bg);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+    .card img{width:100%;height:160px;object-fit:cover;display:block}
+    .card-body{padding:12px 14px;flex:1;display:flex;flex-direction:column;gap:8px}
+    .card h3{margin:0;color:var(--accent);font-size:16px}
+    .card p{margin:0;color:#555;font-size:13px;flex:1}
+    .chip{font-size:12px;padding:6px 8px;border-radius:999px;background:#fff6f3;border:1px solid #ffe8de;color:#c24a1b;display:inline-block;margin:3px 3px}
+    .meta{display:flex;gap:8px;flex-wrap:wrap}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+    footer{margin-top:40px;padding:28px 0;border-top:1px solid #f3e9e6;color:#666}
+    .small{font-size:13px}
+    @media (max-width:980px){.hero{grid-template-columns:1fr}.hero-card{order:2}}
+    @media (max-width:520px){nav ul{display:none}.logo{width:40px;height:40px}.card img{height:140px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo">TN</div>
+        <div>
+          <div style="font-weight:800;">Tamil Nadu Recipes</div>
+          <div style="font-size:12px;color:#666;margin-top:3px">Traditional & modern dishes</div>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="home.html">Home</a></li>
+          <li><a href="hase.html">Recipes</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="home" class="hero">
+      <div class="hero-card">
+        <h1>🍛 Smart Recipe Generator — Quick & Easy</h1>
+        <p>Search by ingredient or recipe name. Try: <strong>idli</strong>, <strong>dosa</strong>, <strong>chicken</strong>, or <strong>dal</strong>.</p>
+
+        <div class="search-row" style="margin-top:8px">
+          <input id="ingredient" placeholder="Type ingredient or recipe (e.g. 'dosa', 'rice', 'sambar')" />
+          <button class="btn" id="searchBtn">Generate</button>
+          <button class="btn secondary" id="showAllBtn">Show All</button>
+        </div>
+
+        <div id="results" class="results" aria-live="polite" style="margin-top:14px"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container small">© <span id="year"></span> Tamil Nadu Recipes. All rights reserved.</footer>
+
+  <script>
+  const recipes = [
+    { name:"Idli", ingredients:["rice","urad dal"], image:"https://thumbs.dreamstime.com/b/idly-condiments-traditional-ethnic-south-indian-breakfast-idli-rice-cake-served-its-tomato-chutney-coconut-chutney-32461530.jpg?w=576", description:"Soft steamed rice cakes — classic South Indian breakfast." },
+    { name:"Dosa", ingredients:["rice","urad dal","oil"], image:"https://i.ytimg.com/vi/CCab5oh0ZOc/maxresdefault.jpg", description:"Crispy fermented rice and lentil crepe." },
+    { name:"Sambar", ingredients:["toor dal","tamarind","drumstick","sambar powder"], image:"https://www.indianhealthyrecipes.com/wp-content/uploads/2021/05/sambar-recipe-1024x1536.jpg", description:"Lentil and vegetable stew tempered with spices." },
+    { name:"Pongal", ingredients:["rice","moong dal","pepper","ghee"], image:"https://bing.com/th?id=OSK.dec12a83681df9b9a173d8d8bf960881", description:"Comforting rice and dal dish, often seasoned with black pepper and ghee." },
+    { name:"Chettinad Chicken Curry", ingredients:["chicken","onion","tomato","chettinad masala"], image:"https://bing.com/th?id=OSK.b60a042800f78fd933986f9d2f676df2", description:"Spicy, aromatic chicken curry from Chettinad region." },
+    { name:"Vadai", ingredients:["urad dal","onion","green chili"], image:"https://www.funfoodfrolic.com/wp-content/uploads/2020/10/Medu-Vada-Thumbnail-1024x1024.jpg", description:"Crispy savory fritters — great with chutney." },
+    { name:"Rasam", ingredients:["tamarind","tomato","pepper","coriander"], image:"https://bing.com/th?id=OSK.9b6f666f31471088248d60c2c1371392", description:"Tangy, peppery soup served with rice." },
+    { name:"Kuzhi Paniyaram", ingredients:["idli batter","onion","chili"], image:"https://th.bing.com/th/id/R.71adca3bad4bad8ffb178a9e44b5998f?rik=IDbCGm7iC0ifGQ&riu=http%3a%2f%2fwww.kannammacooks.com%2fwp-content%2fuploads%2fkuzhi-paniyaram.jpg&ehk=3wOFmWZNSxjv8Uw7Mwz%2fb0I%2bSWGoiYR21U8m0bg2QKA%3d&risl=&pid=ImgRaw&r=0", description:"Small round dumplings made from idli/dosa batter." },
+    { name:"Chicken 65", ingredients:["chicken","red chili","ginger","garlic"], image:"https://recipesofhome.com/wp-content/uploads/2020/08/chicken-65-recipe.jpg", description:"Spicy deep-fried chicken snack — popular across Tamil Nadu." }
+  ];
+
+  const resultsDiv = document.getElementById('results');
+  const searchInput = document.getElementById('ingredient');
+  const searchBtn = document.getElementById('searchBtn');
+  const showAllBtn = document.getElementById('showAllBtn');
+
+  function renderCards(list, target){
+    target.innerHTML = '';
+    if(!list || list.length===0){
+      target.innerHTML = `<p style="padding:10px;color:#666">No recipes found.</p>`;
+      return;
+    }
+    list.forEach(r => {
+      const d = document.createElement('div');
+      d.className = 'card';
+      d.innerHTML = `
+        <img src="${r.image}" alt="${r.name}">
+        <div class="card-body">
+          <h3>${r.name}</h3>
+          <p>${r.description}</p>
+          <div class="meta small" style="margin-top:8px">
+            ${r.ingredients.map(i=>`<span class="chip">${i}</span>`).join('')}
+          </div>
+        </div>
+      `;
+      target.appendChild(d);
+    });
+  }
+
+  resultsDiv.innerHTML = '<p class="small" style="padding:10px;color:#666">Search for an ingredient or recipe to see results here.</p>';
+
+  function findRecipes(){
+    const q = (searchInput.value || '').trim().toLowerCase();
+    if(!q){
+      resultsDiv.innerHTML = '<p class="small" style="padding:10px;color:#666">Please type something to search (e.g. "idli", "rice", "chicken").</p>';
+      return;
+    }
+    const filtered = recipes.filter(r =>
+      r.name.toLowerCase().includes(q) ||
+      r.ingredients.some(ing => ing.toLowerCase().includes(q))
+    );
+    renderCards(filtered, resultsDiv);
+  }
+
+  searchBtn.addEventListener('click', findRecipes);
+  searchInput.addEventListener('keydown', e => { if(e.key==='Enter') findRecipes(); });
+  showAllBtn.addEventListener('click', ()=>{ renderCards(recipes, resultsDiv); });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
